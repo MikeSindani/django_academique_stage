@@ -1,12 +1,15 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 # Create your models here.
-class Faculte (models.Model):
-    nom = models.CharField(max_length=200)
-    universite = models.CharField(max_length=200)
+
 class Universite(models.Model):
     nom = models.CharField(max_length=200)
     email = models.EmailField()
+    def __str__(self, *args, **kwds) :
+        return "{}".format(self.nom)
+class Faculte (models.Model):
+    nom = models.CharField(max_length=200)
+    universite = models.ForeignKey("Universite", on_delete=models.SET_NULL, null=True)
 
 class Entreprise (models.Model):
     nom = models.CharField(max_length=200)
@@ -36,9 +39,12 @@ class Etudiant(models.Model):
      nom = models.CharField(max_length=200) 
      prenom = models.CharField(max_length=200)  
      promotion = models.CharField(max_length=200)
-     faculte = models.CharField(max_length=200)
+     faculte =  models.ForeignKey("Faculte", on_delete=models.SET_NULL,null=True)
      filiere = models.CharField(max_length=200)
+     entreprise = models.ForeignKey("Entreprise", on_delete=models.SET_NULL,null=True)
      Universite = models.ForeignKey("Universite", on_delete=models.SET_NULL,null=True)
+     email = models.EmailField(null=True, blank=True)
+     phone = models.CharField(max_length=200, null=True, blank=True)
 
      def __str__(self):
        return "{}".format(self.nom)
@@ -47,12 +53,13 @@ class Stage (models.Model):
     titre = models.CharField(max_length=200)
     description = models.TextField()
     annee = models.CharField(max_length=200)
-    date_debut = models.DateField()
+    date_debut = models.DateField(auto_created=True)
     date_fin = models.DateField()
-    lieu = models.CharField(max_length=200)
+    lieu = models.CharField(max_length=200,null=True,blank=True)
     etudiant = models.ForeignKey("Etudiant", on_delete=models.SET_NULL,null=True)
     universite = models.ForeignKey("Universite", on_delete=models.SET_NULL,null=True)
     entreprise = models.ForeignKey("Entreprise", on_delete=models.SET_NULL,null=True)
+    encadeur = models.ForeignKey("User", on_delete=models.SET_NULL,null=True)
     
 class Cotation  (models.Model):
     regularite = models.IntegerField()
