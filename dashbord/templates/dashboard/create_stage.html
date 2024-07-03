@@ -46,8 +46,10 @@
                             <div class="user-content">
                                 <a href="javascript:void(0)"><img src="plugins/images/users/genu.jpg"
                                         class="thumb-lg img-circle" alt="img"></a>
-                                <h4 class="text-white mt-2">{{etudiant.nom}} {{etudiant.prenom}}</h4>
+                                <h2 class="text-white mt-2">{{etudiant.nom}} {{etudiant.prenom}}</h2>
                                 <h5 class="text-white mt-2">{{etudiant.email}}</h5>
+                                <h5 class="text-white mt-2">{{etudiant.matricule}}</h5>
+                                <h5 class="text-white mt-2">{{etudiant.phone}}</h5>
                             </div>
                         </div>
                     </div>
@@ -59,7 +61,8 @@
                 <div class="card">
                     <div class="card-body">
                         
-                    <form class="form-horizontal form-material">
+                    <form class="form-horizontal form-material" action="/dashboard/create_stage/{{ etudiant.matricule }}/" method="POST">
+                        {% csrf_token %}
                         <div class="form-group mb-4">
                             <label class="col-md-12 p-0">Titre</label>
                             <div class="col-md-12 border-bottom p-0">
@@ -84,16 +87,11 @@
                                 <input type="date" class="form-control p-0 border-0" name="date_debut">
                             </div>
                         </div>
-                        <div class="form-group mb-4">
-                            <label class="col-md-12 p-0">Etudiant</label>
-                            <div class="col-md-12 border-bottom p-0">
-                                <input  type="hidden" disabled value="{{ etudiant.id }}"  class="form-control p-0 border-0" name="etudiant">
-                            </div>
-                        </div>
+
                         <div class="form-group mb-4">
                             <label class="col-md-12 p-0">Université</label>
                             <div class="col-md-12 border-bottom p-0">
-                                <input  type="text" disabled value="{{ etudiant.universite.nom }}" placeholder="{{ etudiant.universite.nom }}" class="form-control p-0 border-0" name="etudiant">
+                                <input  type="text" disabled value="{{ etudiant.universite.nom }}" placeholder="{{ etudiant.universite.nom }}" class="form-control p-0 border-0" name="universite">
                             </div>
                         </div>
                         <div class="form-group mb-4">

@@ -11,6 +11,6 @@ urlpatterns = [
     path('stage/', stage, name='stage'),
      path('liste_stagaires/', liste_stagaires, name='liste_stagaires'),
      path("commence_stage/<str:etudiant_id>/",commenece_stage,name="commence_stage"),
-     path("create_stages/",create_stage,name="create_stages"),
+     path("create_stage/<str:etudiant_id>/",create_stage,name="create_stage"),
     
 ]

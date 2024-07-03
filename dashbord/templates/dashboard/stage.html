@@ -41,6 +41,11 @@
                         <div class="white-box">
                             <h3 class="box-title">Stage</h3>
                             <p class="text-muted">Add class <code>.table</code></p>
+                            {% if message %}
+                            <div class="alert alert-success" role="alert">
+                                {{ message }}
+                            </div>
+                        {% endif %}
                             <div class="table-responsive">
                                 <table class="table text-nowrap">
                                     <thead>

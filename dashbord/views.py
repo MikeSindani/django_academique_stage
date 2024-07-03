@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from .models import Etudiant, Universite, Entreprise,Faculte, Stage, Cotation
+from .models import Etudiant, Universite, Entreprise,Faculte, Stage, Cotation,User
 from django.http import JsonResponse
 
 
@@ -96,16 +96,20 @@ def commenece_stage(request, etudiant_id):
 # views.py
 
 
-def create_stage(request):
+def create_stage(request, etudiant_id):
     if request.method == 'POST':
         titre = request.POST.get('titre')
         description = request.POST.get('description')
         annee = request.POST.get('annee')
         date_debut = request.POST.get('date_debut')
-        etudiant = request.user.etudiant
-        universite = request.user.universite
-        entreprise = request.user.entreprise
-        encadreur = request.user.username
+        etudiant = Etudiant.objects.get(matricule=etudiant_id)
+        universite_id = etudiant.Universite.id
+        universite = Universite.objects.get(id=universite_id)
+        entreprise_id = request.user.entreprise.id
+        entreprise = Entreprise.objects.get(id=entreprise_id)
+        encadreur_id = request.user.id
+        encadreur = User.objects.get(id=encadreur_id)
+
 
         project = Stage(
             titre=titre,
@@ -115,9 +119,12 @@ def create_stage(request):
             etudiant=etudiant,
             universite=universite,
             entreprise=entreprise,
-            encadreur=encadreur
+            encadeur=encadreur
         )
         project.save()
-        return redirect('commence_stage')
+        stages = Stage.objects.all()
+        return render(request, 'dashboard/stage.html', {
+            'stages': stages, "message": 'Stage peut étre commence avec succes !'
+        })
     else:
         return render(request, 'dashboard/stage.html')
