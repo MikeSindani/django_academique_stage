@@ -1,0 +1,152 @@
+{% extends "base.html" %}
+{% load static %}
+{%block titre%}{{ request.user.username }} {{ request.user.email }} - Stage - Dashboard {%endblock titre %}
+{%block style %}
+{%endblock style %}
+{% block Content %}
+<div class="page-wrapper">
+    <!-- ============================================================== -->
+    <!-- Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
+    <div class="page-breadcrumb bg-white">
+        <div class="row align-items-center">
+            <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                <h4 class="page-title">Commencer le stage</h4>
+            </div>
+            <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+                <div class="d-md-flex">
+                    <ol class="breadcrumb ms-auto">
+                        <li><a href="#" class="fw-normal">Dashboard</a></li>
+                    </ol>
+                    <a href="https://www.wrappixel.com/templates/ampleadmin/" target="_blank"
+                        class="btn btn-danger  d-none d-md-block pull-right ms-3 hidden-xs hidden-sm waves-effect waves-light text-white">Upgrade
+                        to Pro</a>
+                </div>
+            </div>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Container fluid  -->
+    <!-- ============================================================== -->
+    <div class="container-fluid">
+        <!-- ============================================================== -->
+        <!-- Start Page Content -->
+        <!-- ============================================================== -->
+        <!-- Row -->
+        <div class="row">
+            <!-- Column -->
+            <div class="col-lg-4 col-xlg-3 col-md-12">
+                <div class="white-box">
+                    <div class="user-bg"> <img width="100%" alt="user" src="{% static 'plugins/images/large/img1.jpg'%}">
+                        <div class="overlay-box">
+                            <div class="user-content">
+                                <a href="javascript:void(0)"><img src="plugins/images/users/genu.jpg"
+                                        class="thumb-lg img-circle" alt="img"></a>
+                                <h2 class="text-white mt-2">{{etudiant.nom}} {{etudiant.prenom}}</h2>
+                                <h5 class="text-white mt-2">{{etudiant.email}}</h5>
+                                <h5 class="text-white mt-2">{{etudiant.matricule}}</h5>
+                                <h5 class="text-white mt-2">{{etudiant.phone}}</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Column -->
+            <!-- Column -->
+            <div class="col-lg-8 col-xlg-9 col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        
+                    <form class="form-horizontal form-material" action="/dashboard/terminer_stage/{{ etudiant.matricule }}/" method="POST">
+                        {% csrf_token %}
+                        <div class="form-group mb-4">
+                            <label class="col-md-12 p-0">Date de fin</label>
+                            <div class="col-md-12 border-bottom p-0">
+                                <input type="date" class="form-control p-0 border-0" name="date_fin">
+                            </div>
+                        </div>
+                        <div class="form-group mb-4">
+                            <label class="col-md-12 p-0">Régularité</label>
+                            <div class="col-md-12 border-bottom p-0">
+                                <input type="number" class="form-control p-0 border-0" name="regularite">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group mb-4">
+                            <label class="col-md-12 p-0">Connaissance</label>
+                            <div class="col-md-12 border-bottom p-0">
+                                <input type="number" class="form-control p-0 border-0" name="connaissance"> <span>/100</span>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group mb-4">
+                            <label class="col-md-12 p-0">Compétance</label>
+                            <div class="col-md-12 border-bottom p-0">
+                                <input type="number" class="form-control p-0 border-0" name="competance"> <span>/100</span>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group mb-4">
+                            <label class="col-md-12 p-0">Discipline</label>
+                            <div class="col-md-12 border-bottom p-0">
+                                <input type="number" class="form-control p-0 border-0" name="dicipline"> <span>/100</span>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group mb-4">
+                            <label class="col-md-12 p-0">Rendement</label>
+                            <div class="col-md-12 border-bottom p-0">
+                                <input type="number" class="form-control p-0 border-0" name="rendement"> <span>/100</span>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group mb-4">
+                            <label class="col-md-12 p-0">Sociabilité</label>
+                            <div class="col-md-12 border-bottom p-0">
+                                <input type="number" class="form-control p-0 border-0" name="sociabililte"> <span>/100</span>
+                            </div>
+                        </div>
+                        
+
+                        <div class="form-group mb-4">
+                            <div class="col-sm-12">
+                                <button class="btn btn-success">Enregistre</button>
+                            </div>
+                        </div>
+                    </form>
+                    </div>
+                </div>
+            </div>
+            <!-- Column -->
+        </div>
+        <!-- Row -->
+        <!-- ============================================================== -->
+        <!-- End PAge Content -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Right sidebar -->
+        <!-- ============================================================== -->
+        <!-- .right-sidebar -->
+        <!-- ============================================================== -->
+        <!-- End Right sidebar -->
+        <!-- ============================================================== -->
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Container fluid  -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+   
+</div>
+<!-- ============================================================== -->
+<!-- End Page wrapper  -->
+<!-- ============================================================== -->
+</div>
+<!-- ============================================================== -->
+<!-- End Wrapper -->
+<!-- ============================================================== -->      
+      
+{% endblock Content %}

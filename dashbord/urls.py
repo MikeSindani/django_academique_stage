@@ -8,9 +8,12 @@ urlpatterns = [
     path('create_entreprise/', create_entreprise, name='create_entreprise'),
     path('create_etudiant/', create_etudiant, name='create_etudiant'),
     path('api/faculties/', api_faculties, name='api_faculties'),
+    path('logout/', logOut, name='logout'),
     path('stage/', stage, name='stage'),
-     path('liste_stagaires/', liste_stagaires, name='liste_stagaires'),
-     path("commence_stage/<str:etudiant_id>/",commenece_stage,name="commence_stage"),
-     path("create_stage/<str:etudiant_id>/",create_stage,name="create_stage"),
+    path('liste_stagaires/', liste_stagaires, name='liste_stagaires'),
+    path("commence_stage/<str:etudiant_id>/",commenece_stage,name="commence_stage"),
+    path("create_stage/<str:etudiant_id>/",create_stage,name="create_stage"),
+    path('fin_du_stage/<str:etudiant_id>/', fin_stage, name='fin_stage'),
+    path('terminer_stage/<str:etudiant_id>/', terminer_stage, name='terminer_stage'),
     
 ]

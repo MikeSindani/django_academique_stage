@@ -8,26 +8,27 @@ from django.contrib.auth import logout
 from dashbord.models import *
 from django.http import HttpResponseRedirect
 # Create your views here.
-def login(request):
+def logIn(request):
     return render(request, 'login/login.html')
 
 
-@unauthentificated_user
-def post_logIn(request):
-    if request.method == "POST" : 
-        
-        email = request.POST.get("email")
-        password  = request.POST.get("password")
-        user = authenticate(request, email=email, password=password)
-        if user is not None:
-                login(request,user)
-                
-                return redirect("dashbord")
-        else:   
-                 # Créer un objet HttpResponse avec les données à envoyer
-                response = HttpResponseRedirect("connexion")
-                # Retourner la réponse
-                return response
-                
+
+def post_login(request):
+    if request.method == "POST":
+        try:
+            email = request.POST.get("email")
+            password = request.POST.get("password")
+            user = authenticate(request, username=email, password=password)
+            
+            if user is not None:
+                login(request=request, user=user)
+                print(user)
+                return redirect('dashbord')  # Correction de la faute de frappe
+            else:
+                return render(request, 'login/login.html', {'msg': 'Invalid email or password'})
+        except Exception as e:
+            # Gestion des exceptions
+            print(f"Error during authentication: {e}")
+            return render(request, 'login/login.html', {'msg': 'An error occurred.'})
     else:
-           return render(request, 'login/login.html')
+        return render(request, 'login/login.html')

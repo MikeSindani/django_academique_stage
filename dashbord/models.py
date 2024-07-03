@@ -27,7 +27,7 @@ class User(AbstractUser): # encadeur univeersiteur et entreprise utilisateur du 
   isEntreprise= models.BooleanField(default=False)
   isUnversite = models.BooleanField(default=False)
 
-  USERNAME_FIELD = 'username'
+  USERNAME_FIELD = 'email'
   REQUIRED_FIELDS = ['password'] 
   def __str__(self):
       return "{} - {}".format(self.username,self.email)

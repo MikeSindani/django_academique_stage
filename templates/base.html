@@ -56,11 +56,11 @@
                         <!-- Logo icon -->
                         <b class="logo-icon">
                             <!-- Dark Logo icon -->
-                            <img src=" {% static "plugins/images/logo-icon.png" %} alt="homepage" />
+                            <img src=" {% static 'img/logo.jpeg' %} alt="homepage" />
                         </b>
                         <!--End Logo icon -->
                         <!-- Logo text -->
-                        <span class="logo-text">
+                        <span class="logo-text" style="display: none;">
                             <!-- dark Logo text -->
                             <img src=" {% static "plugins/images/logo-text.png" %} alt="homepage" />
                         </span>
@@ -160,6 +160,11 @@
                                 <i class="fa fa-table" aria-hidden="true"></i>
                                 <span class="hide-menu">Stage</span>
                             </a>             
+                        </li>
+                        <li class="text-center p-20 upgrade-btn">
+                            <a href="{% url  'logout'  %}"
+                                class="btn d-grid btn-danger text-white" target="_blank">
+                                Se deconnecter</a>
                         </li>
 
                     </ul>

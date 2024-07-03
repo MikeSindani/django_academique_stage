@@ -1,9 +1,12 @@
 from django.shortcuts import render,redirect
 from .models import Etudiant, Universite, Entreprise,Faculte, Stage, Cotation,User
 from django.http import JsonResponse
+from django.contrib.auth import authenticate, login,logout
+from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
+
 def dashboard(request):
     totals__entreprise = Entreprise.objects.all().count()
     totals__universite = Universite.objects.all().count()
@@ -20,6 +23,7 @@ def dashboard(request):
 
 def ajouter_entreprise (request):
     return render(request, "dashboard/ajouter_entreprise.html")
+
 
 def ajouter_etudiant (request):
     entreprises = Entreprise.objects.all()
@@ -78,22 +82,27 @@ def liste_stagaires(request):
     etudiants = Etudiant.objects.filter(entreprise=entreprise_id)
     return render(request, 'dashboard/liste_stagaire.html', {"etudiants": etudiants})
 
-# views.py
-from django.shortcuts import render, redirect
-from .models import Stage, Etudiant, Universite, Entreprise
+
 
 def stage(request):
     stages = Stage.objects.all()
+    entreprise_id = request.user.entreprise
+    print(entreprise_id)
+    etudiants = Etudiant.objects.filter(entreprise=entreprise_id)
     return render(request, 'dashboard/stage.html', {
         'stages': stages,
+        "etudiants": etudiants
     })
+
 
 def commenece_stage(request, etudiant_id):
     etudiant = Etudiant.objects.get(matricule=etudiant_id)
     return render(request, 'dashboard/create_stage.html',{"etudiant": etudiant})
 
 
-# views.py
+def logOut(request):
+      logout(request)
+      return redirect('connexion')
 
 
 def create_stage(request, etudiant_id):
@@ -128,3 +137,42 @@ def create_stage(request, etudiant_id):
         })
     else:
         return render(request, 'dashboard/stage.html')
+    
+
+def fin_stage(request, etudiant_id):
+    etudiant = Etudiant.objects.get(matricule=etudiant_id)
+    return render(request, 'dashboard/fin_stage.html',{"etudiant": etudiant})
+
+
+def terminer_stage (request, etudiant_id):
+    if request.method == 'POST':
+        regularite = request.POST.get('regularite')
+        connaissance = request.POST.get('connaissance')
+        competance = request.POST.get('competance')
+        dicipline = request.POST.get('dicipline')
+        rendement = request.POST.get('rendement')
+        sociabililte = request.POST.get('sociabililte')
+        date_fin = request.POST.get('date_fin')
+
+        stage = Stage.objects.get(etudiant__matricule=etudiant_id)
+        etudiant = Etudiant.objects.get(matricule=etudiant_id)
+
+        # Update the Stage model
+        stage.date_fin = date_fin
+        stage.save()
+
+        cotation = Cotation(
+            regularite=regularite,
+            connaissance=connaissance,
+            competance=competance,
+            dicipline=dicipline,
+            rendement=rendement,
+            sociabililte=sociabililte,
+            etudiant=etudiant,
+        )
+        cotation.save()
+
+        return redirect('stage')  # redirect to a list view of cotations
+    else:
+        return render(request, 'dashboard/fin_stage.html',{"etudiant": etudiant,"message": 'Stage terminé avec succes !'})
+    

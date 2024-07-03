@@ -50,6 +50,7 @@
                                 <table class="table text-nowrap">
                                     <thead>
                                         <tr>
+                                         <th>Action</th>
                                           <th>Encadeur</th>
                                           <th>Titre</th>
                                           <th>Description</th>
@@ -60,11 +61,13 @@
                                           <th>Etudiant</th>
                                           <th>Universite</th>
                                           <th>Entreprise</th>
+                                          
                                         </tr>
                                       </thead>
                                       <tbody>
                                         {% for stage in stages %}
                                         <tr>
+                                          <td><a class="btn btn-primary btn-danger" href="/dashboard/fin_du_stage/{{ stage.etudiant.matricule }}/">Fin du stage</a></td>
                                           <td>{{ stage.encadeur.username }}</td>
                                           <td>{{ stage.titre }}</td>
                                           <td>{{ stage.description }}</td>
@@ -76,6 +79,7 @@
                                           <td>{{ stage.etudiant.prenom }}</td>
                                           <td>{{ stage.universite.nom }}</td>
                                           <td>{{ stage.entreprise.nom }}</td>
+                                          
                                         </tr>
                                         {% empty %}
                                         <tr>
