@@ -3,7 +3,7 @@ from django.contrib.auth.models import AbstractUser
 # Create your models here.
 
 class Universite(models.Model):
-    nom = models.CharField(max_length=200)
+    nom = models.CharField(max_length=200,unique=True)
     email = models.EmailField()
     def __str__(self, *args, **kwds) :
         return "{}".format(self.nom)
@@ -12,7 +12,7 @@ class Faculte (models.Model):
     universite = models.ForeignKey("Universite", on_delete=models.SET_NULL, null=True)
 
 class Entreprise (models.Model):
-    nom = models.CharField(max_length=200)
+    nom = models.CharField(max_length=200,unique=True)
     status = models.CharField(max_length=200)
     email = models.EmailField()
     adresse = models.CharField(max_length=200)
@@ -68,4 +68,4 @@ class Cotation  (models.Model):
     dicipline = models.IntegerField()
     rendement = models.IntegerField()
     sociabililte = models.IntegerField()
-    etudiant = models.ForeignKey("Etudiant",on_delete=models.SET_NULL,null=True)
+    etudiant = models.ForeignKey("Etudiant",on_delete=models.SET_NULL,null=True) 

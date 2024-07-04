@@ -14,12 +14,12 @@
             <div class="page-breadcrumb bg-white">
                 <div class="row align-items-center">
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                        <h4 class="page-title">Listes Stagaires</h4>
+                        <h4 class="page-title">Cotations</h4>
                     </div>
                     <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                         <div class="d-md-flex">
-                            <ol class="breadcrumb ms-auto " style="display: none;">
-                                <li><a href="{% url 'export_stages_to_csv' %}" class="btn btn-primary text-white">Extraire en CVS</a></li>
+                            <ol class="breadcrumb ms-auto">
+                                <li><a href="{% url 'export_cotations_to_csv' %}" class="btn btn-primary text-white">Extraire en CVS</a></li>
                             </ol>
                         </div>
                     </div>
@@ -39,42 +39,45 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="white-box">
-                            <h3 class="box-title">Listes Stagaires</h3>
+                            <h3 class="box-title">Listes Cotation</h3>
                             <p class="text-muted">Etudiant ajoutes</code></p>
                             <div class="table-responsive">
                                 <table class="table text-nowrap">
-                                    <thead>
+                                    <<thead>
                                         <tr>
-                                            <th>Action</th>
-                                          <th>Matricule</th>
-                                          <th>Nom</th>
-                                          <th>Prenom</th>
-                                          <th>Filiere</th>
-                                          <th>Faculte</th>
-                                          <th>Entreprise</th>
+                                          <th><b>Étudiant</b></th>
                                           <th>Universite</th>
-                                         
+                                          <th>Faculte</th>
+                                          <th>Promotion</th>
+                                          <th>Regularité</th>
+                                          <th>Connaissance</th>
+                                          <th>Compétance</th>
+                                          <th>Discipline</th>
+                                          <th>Rendement</th>
+                                          <th>Sociabilité</th>
                                         </tr>
                                       </thead>
                                       <tbody>
-                                        {% for etudiant in etudiants %}
+                                        {% for cotation in cotations %}
                                         <tr>
-                                          <td><a class="btn btn-primary" href="/dashboard/commence_stage/{{ etudiant.matricule }}/">Commence stage</a></td>
-                                          <td>{{ etudiant.matricule }}</td>
-                                          <td><b>{{ etudiant.nom }}</b></td>
-                                          <td><b>{{ etudiant.prenom }}</b></td>
-                                          <td>{{ etudiant.filiere }}</td>
-                                          <td>{{ etudiant.faculte.nom }}</td>
-                                          <td>{{ etudiant.entreprise.nom }}</td>
-                                          <td>{{ etudiant.universite.nom }}</td>
-                                          
+                                          <td> <b>{{ cotation.etudiant.nom }} {{ cotation.etudiant.prenom }}</b></td>
+                                          <td>{{ cotation.etudiant.universite.nom }}</td>
+                                          <td>{{ cotation.etudiant.faculte.nom }}</td>
+                                          <td>{{ cotation.etudiant.promotion }}</td>
+                                          <td>{{ cotation.regularite }}</td>
+                                          <td>{{ cotation.connaissance }}</td>
+                                          <td>{{ cotation.competance }}</td>
+                                          <td>{{ cotation.discipline }}</td>
+                                          <td>{{ cotation.rendement }}</td>
+                                          <td>{{ cotation.sociabilite }}</td>
+                                         
                                         </tr>
                                         {% empty %}
                                         <tr>
-                                          <td colspan="7">No etudiants found.</td>
+                                          <td colspan="7">No cotations found.</td>
                                         </tr>
                                         {% endfor %}
-                                        <tbody>
+                                      </tbody>
                                 </table>
                             </div>
                         </div>

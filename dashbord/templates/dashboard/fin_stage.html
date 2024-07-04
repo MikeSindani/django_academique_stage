@@ -11,7 +11,7 @@
     <div class="page-breadcrumb bg-white">
         <div class="row align-items-center">
             <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                <h4 class="page-title">Commencer le stage</h4>
+                <h4 class="page-title">Fin du stage</h4>
             </div>
             <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                 <div class="d-md-flex">
@@ -44,8 +44,8 @@
                     <div class="user-bg"> <img width="100%" alt="user" src="{% static 'plugins/images/large/img1.jpg'%}">
                         <div class="overlay-box">
                             <div class="user-content">
-                                <a href="javascript:void(0)"><img src="plugins/images/users/genu.jpg"
-                                        class="thumb-lg img-circle" alt="img"></a>
+                                <a href="javascript:void(0)"><img src="{% static "img/avatar.png" %}"
+                                    class="thumb-lg img-circle" alt="img" width="700"></a>
                                 <h2 class="text-white mt-2">{{etudiant.nom}} {{etudiant.prenom}}</h2>
                                 <h5 class="text-white mt-2">{{etudiant.email}}</h5>
                                 <h5 class="text-white mt-2">{{etudiant.matricule}}</h5>

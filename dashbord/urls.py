@@ -15,5 +15,8 @@ urlpatterns = [
     path("create_stage/<str:etudiant_id>/",create_stage,name="create_stage"),
     path('fin_du_stage/<str:etudiant_id>/', fin_stage, name='fin_stage'),
     path('terminer_stage/<str:etudiant_id>/', terminer_stage, name='terminer_stage'),
+    path('cotation/', cotations, name='cotations'),
+    path('export_cotations/', export_cotations_to_csv, name='export_cotations_to_csv'),
+    path('export_stages/', export_stages_to_csv, name='export_stages_to_csv'),
     
 ]

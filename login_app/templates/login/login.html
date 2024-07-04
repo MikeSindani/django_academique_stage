@@ -4,7 +4,7 @@
 <html lang="en" >
 <head>
   <meta charset="UTF-8">
-  <title>CodePen - Login</title>
+  <title>Login</title>
   <link rel="stylesheet" href="{% static "login.css" %}">
 
 </head>
@@ -21,8 +21,15 @@
         <h3 class="login__title">Se connecter</h3>
       </header>
 
-      <div class="login__body">
+     
 
+      <div class="login__body">
+        <div style="display: flex;justify-content: center;">
+          <b class="logo-icon" style="margin-top: 10px;">
+            <!-- Dark Logo icon -->
+            <img src="{% static 'img/logo.jpeg' %}" alt="homepage" width="200"/>
+        </b>
+        </div>
         <div class="form__field" style="margin-bottom: 10px;">
           <input type="Email" name="email" placeholder="Email" required>
         </div>
@@ -31,15 +38,19 @@
           <input type="password" name="password" placeholder="Password" required>
         </div>
 
+        
+
       </div>
       <div>{{msg}}</div>
 
-      <footer class="login__footer">
+      <footer class="login__footer ">
         <input type="submit" value="Se connecter">
-
         <p><span class="icon icon--info">?</span><a href="#">Mot de passe oublie?</a></p>
       </footer>
-
+      <div class="btn_signup">
+         <a href="{% url 'signup' %}" class="login__title">Cree un compte</a>
+      </div>
+     
     </form>
 
   </div>

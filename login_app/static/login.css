@@ -110,9 +110,6 @@ fieldset {
 }
 
 input {
-  -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
   border: none;
   font: inherit;
   margin: 0;
@@ -125,8 +122,9 @@ input[type='submit'] {
 }
 
 .form input[type='email'],
-.form input[type='password'] {
+.form input[type='password'], .form input[type='text'],.login select {
   width: 100%;
+  margin: 2px;
 }
 
 /* modules/login.css */
@@ -149,6 +147,16 @@ input[type='submit'] {
   padding: 1.5em;
   text-align: center;
   text-transform: uppercase;
+}
+.btn_signup {
+  background-color: #a1a1a1;
+  border-top-left-radius: 0.25em;
+  border-top-left-radius: var(--loginBorderRadius);
+  border-top-right-radius: 0.25em;
+  border-top-right-radius: var(--loginBorderRadius);
+  color: #fff;
+  padding: 1.5em;
+  text-align: center;
 }
 
 .login__title {
@@ -178,12 +186,19 @@ input[type='submit'] {
 }
 
 .login input[type='email'],
-.login input[type='password'] {
+.login input[type='password'],.login input[type='text'],.login select {
   border: 0.0625em solid #e5e5e5;
   padding: 1em 1.25em;
 }
 
 .login input[type='text'] {
+  border-top-left-radius: 0.25em;
+  border-top-left-radius: var(--loginInputBorderRadius);
+  border-top-right-radius: 0.25em;
+  border-top-right-radius: var(--loginInputBorderRadius);
+}
+
+.login select {
   border-top-left-radius: 0.25em;
   border-top-left-radius: var(--loginInputBorderRadius);
   border-top-right-radius: 0.25em;
@@ -196,6 +211,8 @@ input[type='submit'] {
   border-top-right-radius: 0.25em;
   border-top-right-radius: var(--loginInputBorderRadius);
 }
+
+
 
 .login input[type='password'] {
   border-bottom-left-radius: 0.25em;

@@ -3,6 +3,8 @@ from .models import Etudiant, Universite, Entreprise,Faculte, Stage, Cotation,Us
 from django.http import JsonResponse
 from django.contrib.auth import authenticate, login,logout
 from django.contrib.auth.decorators import login_required
+import csv
+from django.http import HttpResponse
 
 
 # Create your views here.
@@ -176,3 +178,95 @@ def terminer_stage (request, etudiant_id):
     else:
         return render(request, 'dashboard/fin_stage.html',{"etudiant": etudiant,"message": 'Stage terminé avec succes !'})
     
+def cotations(request):
+    cotations = Cotation.objects.all()
+    return render(request, 'dashboard/cotation.html', {"cotations": cotations})
+
+
+
+def export_cotations_to_csv(request):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="cotations.csv"'
+
+    writer = csv.writer(response, delimiter=';')
+    writer.writerow([
+        'Regularité',
+        'Connaissance',
+        'Compétance',
+        'Discipline',
+        'Rendement',
+        'Sociabilité',
+        'Étudiant',
+    ])
+
+    cotations = Cotation.objects.all().values(
+        'regularite',
+        'connaissance',
+        'competance',
+        'discipline',
+        'rendement',
+        'sociabilite',
+        'etudiant__nom',
+        'etudiant__prenom',
+    )
+
+    for cotation in cotations:
+        writer.writerow([
+            cotation['regularite'],
+            cotation['connaissance'],
+            cotation['competance'],
+            cotation['discipline'],
+            cotation['rendement'],
+            cotation['sociabilite'],
+            f"{cotation['etudiant__nom']} {cotation['etudiant__prenom']}",
+        ])
+
+    return response
+
+def export_stages_to_csv(request):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="stages.csv"'
+
+    writer = csv.writer(response, delimiter=';')
+    writer.writerow([
+        'Titre',
+        'Description',
+        'Année',
+        'Date de début',
+        'Date de fin',
+        'Lieu',
+        'Étudiant',
+        'Université',
+        'Entreprise',
+        'Encadreur',
+    ])
+
+    stages = Stage.objects.all().values(
+        'titre',
+        'description',
+        'annee',
+        'date_debut',
+        'date_fin',
+        'lieu',
+        'etudiant__nom',
+        'etudiant__prenom',
+        'universite__nom',
+        'entreprise__nom',
+        'encadeur__username',
+    )
+
+    for stage in stages:
+        writer.writerow([
+            stage['titre'],
+            stage['description'],
+            stage['annee'],
+            stage['date_debut'],
+            stage['date_fin'],
+            stage['lieu'],
+            f"{stage['etudiant__nom']} {stage['etudiant__prenom']}",
+            stage['universite__nom'],
+            stage['entreprise__nom'],
+            stage['encadeur__username'],
+        ])
+
+    return response

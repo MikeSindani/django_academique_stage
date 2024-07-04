@@ -37,7 +37,7 @@
                 <!-- ============================================================== -->
                 <!-- Three charts -->
                 <!-- ============================================================== -->
-                <div class="row justify-content-center"  >
+                <div class="row"  >
                     <div class="col-lg-4 col-md-12">
                         <div class="white-box analytics-info">
                             <h3 class="box-title">Total Universite</h3>
@@ -137,7 +137,7 @@
                                         {% for entreprise in entreprises %}
                                         <tr>
                                             <td>{{ forloop.counter }}</td>
-                                            <td>{{ entreprise.nom }}</td>
+                                            <td><b>{{ entreprise.nom }}</b></td>
                                             <td>{{ entreprise.status }}</td>
                                             <td>{{ entreprise.adresse }}</td>
                                             <td>{{ entreprise.email }}</td>
