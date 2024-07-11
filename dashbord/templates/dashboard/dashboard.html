@@ -38,7 +38,7 @@
                 <!-- Three charts -->
                 <!-- ============================================================== -->
                 <div class="row"  >
-                    <div class="col-lg-4 col-md-12">
+                    <div class="col-lg-4 col-md-12 hidden" style="display: none;">
                         <div class="white-box analytics-info">
                             <h3 class="box-title">Total Universite</h3>
                             <ul class="list-inline two-part d-flex align-items-center mb-0">
@@ -51,7 +51,7 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-md-12">
+                    <div class="col-lg-4 col-md-12 hidden" style="display: none;">
                         <div class="white-box analytics-info">
                             <h3 class="box-title">Total Entreprise</h3>
                             <ul class="list-inline two-part d-flex align-items-center mb-0">
@@ -62,7 +62,7 @@
                                 </li>
                                 <li class="ms-auto"><span class="counter text-purple">{{totals__entreprise}}</span></li>
                             </ul>
-                        </div>
+                    </div>
                     </div>
                     <div class="col-lg-4 col-md-12" style="display: none;">
                         <div class="white-box analytics-info">
@@ -107,12 +107,16 @@
                 <!-- ============================================================== -->
                 <!-- RECENT SALES -->
                 <!-- ============================================================== -->
+
                 <div class="row">
-                    <div class="col-md-12 col-lg-12 col-sm-12">
+                    {% if request.user.isFaculte %}
+                   
+                    <div class="col-md-12 col-lg-12 col-sm-12" >
                         <div class="white-box">
-                            <div class="d-md-flex mb-3">
-                                <h3 class="box-title mb-0">Recent sales</h3>
-                                <div class="col-md-3 col-sm-4 col-xs-6 ms-auto">
+                            
+                            <div class="d-md-flex mb-3"  >
+                                <h3 class="box-title mb-0">Listes facultes</h3>
+                                <div class="col-md-3 col-sm-4 col-xs-6 ms-auto" style="display:none;">
                                     <select class="form-select shadow-none row border-top">
                                         <option>March 2021</option>
                                         <option>April 2021</option>
@@ -120,27 +124,50 @@
                                         <option>June 2021</option>
                                         <option>July 2021</option>
                                     </select>
-                                </div>
+                                </div> 
                             </div>
+                            {% comment %}
+                            <form action="{% url 'create_faculte' %}" method="POST" class="form-horizontal">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <label for="nom" class="col-sm-2 control-label">Nom:</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" id="nom" name="nom" class="form-control">
+                                    </div>
+                                </div>
+                            
+                                <div class="form-group">
+                                    <label for="universite" class="col-sm-2 control-label">Université:</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" id="universite" name="universite" value="{{ request.user.universite.nom }}" class="form-control">
+                                    </div>
+                                </div>                
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <button type="submit" class="btn btn-primary">Ajouter</button>
+                                    </div>
+                                </div>
+                                {% if message %}
+                                <div class="alert alert-success" role="alert">
+                                    {{ message }}
+                                </div>
+                                
+                            </form>
+                            {% endcomment %}
                             <div class="table-responsive">
                                 <table class="table no-wrap">
                                     <thead>
                                         <tr>
                                             <th class="border-top-0">#</th>
                                             <th class="border-top-0">Nom</th>
-                                            <th class="border-top-0">Status</th>
-                                            <th class="border-top-0">Adresse</th>
-                                            <th class="border-top-0">Email</th>
+                                            <th class="border-top-0">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {% for entreprise in entreprises %}
+                                        {% for faculte in facultes %}
                                         <tr>
                                             <td>{{ forloop.counter }}</td>
-                                            <td><b>{{ entreprise.nom }}</b></td>
-                                            <td>{{ entreprise.status }}</td>
-                                            <td>{{ entreprise.adresse }}</td>
-                                            <td>{{ entreprise.email }}</td>
+                                            <td><b>{{ faculte.nom }}</b></td>
                                         </tr>
                                         {% endfor %}
                                     </tbody>
@@ -148,6 +175,7 @@
                             </div>
                         </div>
                     </div>
+                    {% endif %}
                 </div>
                 <!-- ============================================================== -->
                 <!-- Recent Comments -->

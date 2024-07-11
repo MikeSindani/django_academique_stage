@@ -14,7 +14,7 @@
             <div class="page-breadcrumb bg-white">
                 <div class="row align-items-center">
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                        <h4 class="page-title">Listes Stagaires</h4>
+                        <h4 class="page-title">Listes des etudiants affectes</h4>
                     </div>
                     <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                         <div class="d-md-flex">
@@ -39,18 +39,17 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="white-box">
-                            <h3 class="box-title">Listes Stagaires</h3>
-                            <p class="text-muted">Etudiant ajoutes</code></p>
+                            <h3 class="box-title">Listes</h3>
                             <div class="table-responsive">
                                 <table class="table text-nowrap">
                                     <thead>
                                         <tr>
-                                            <th>Action</th>
                                           <th>Matricule</th>
                                           <th>Nom</th>
-                                          <th>Prenom</th>
+                                          <th>Postnom</th>
                                           <th>Filiere</th>
                                           <th>Faculte</th>
+                                          <th>Universite</th>
                                           <th>Entreprise</th>
                                          
                                         </tr>
@@ -58,14 +57,13 @@
                                       <tbody>
                                         {% for etudiant in etudiants %}
                                         <tr>
-                                          <td><a class="btn btn-primary" href="/dashboard/commence_stage/{{ etudiant.matricule }}/">Commence stage</a></td>
                                           <td>{{ etudiant.matricule }}</td>
                                           <td><b>{{ etudiant.nom }}</b></td>
                                           <td><b>{{ etudiant.prenom }}</b></td>
                                           <td>{{ etudiant.filiere }}</td>
                                           <td>{{ etudiant.faculte.nom }}</td>
+                                          <td>{{ etudiant.universite.nom }}</td>
                                           <td>{{ etudiant.entreprise.nom }}</td>
-                                          
                                         </tr>
                                         {% empty %}
                                         <tr>

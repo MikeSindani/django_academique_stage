@@ -14,7 +14,7 @@
             <div class="page-breadcrumb bg-white">
                 <div class="row align-items-center">
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                        <h4 class="page-title">Listes Stagaires</h4>
+                        <h4 class="page-title">Listes des entreprises</h4>
                     </div>
                     <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                         <div class="d-md-flex">
@@ -37,42 +37,42 @@
                 <!-- Start Page Content -->
                 <!-- ============================================================== -->
                 <div class="row">
-                    <div class="col-sm-12">
+                    <div class="col-md-12 col-lg-12 col-sm-12">
                         <div class="white-box">
-                            <h3 class="box-title">Listes Stagaires</h3>
-                            <p class="text-muted">Etudiant ajoutes</code></p>
+                            <div class="d-md-flex mb-3">
+                                <h3 class="box-title mb-0">Recent sales</h3>
+                                <div class="col-md-3 col-sm-4 col-xs-6 ms-auto">
+                                    <select class="form-select shadow-none row border-top">
+                                        <option>March 2021</option>
+                                        <option>April 2021</option>
+                                        <option>May 2021</option>
+                                        <option>June 2021</option>
+                                        <option>July 2021</option>
+                                    </select>
+                                </div>
+                            </div>
                             <div class="table-responsive">
-                                <table class="table text-nowrap">
+                                <table class="table no-wrap">
                                     <thead>
                                         <tr>
-                                            <th>Action</th>
-                                          <th>Matricule</th>
-                                          <th>Nom</th>
-                                          <th>Prenom</th>
-                                          <th>Filiere</th>
-                                          <th>Faculte</th>
-                                          <th>Entreprise</th>
-                                         
+                                            <th class="border-top-0">#</th>
+                                            <th class="border-top-0">Nom</th>
+                                            <th class="border-top-0">Status</th>
+                                            <th class="border-top-0">Adresse</th>
+                                            <th class="border-top-0">Email</th>
                                         </tr>
-                                      </thead>
-                                      <tbody>
-                                        {% for etudiant in etudiants %}
+                                    </thead>
+                                    <tbody>
+                                        {% for entreprise in entreprises %}
                                         <tr>
-                                          <td><a class="btn btn-primary" href="/dashboard/commence_stage/{{ etudiant.matricule }}/">Commence stage</a></td>
-                                          <td>{{ etudiant.matricule }}</td>
-                                          <td><b>{{ etudiant.nom }}</b></td>
-                                          <td><b>{{ etudiant.prenom }}</b></td>
-                                          <td>{{ etudiant.filiere }}</td>
-                                          <td>{{ etudiant.faculte.nom }}</td>
-                                          <td>{{ etudiant.entreprise.nom }}</td>
-                                          
-                                        </tr>
-                                        {% empty %}
-                                        <tr>
-                                          <td colspan="7">No etudiants found.</td>
+                                            <td>{{ forloop.counter }}</td>
+                                            <td><b>{{ entreprise.nom }}</b></td>
+                                            <td>{{ entreprise.status }}</td>
+                                            <td>{{ entreprise.adresse }}</td>
+                                            <td>{{ entreprise.email }}</td>
                                         </tr>
                                         {% endfor %}
-                                        <tbody>
+                                    </tbody>
                                 </table>
                             </div>
                         </div>

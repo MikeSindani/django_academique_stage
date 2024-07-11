@@ -19,19 +19,74 @@ def dashboard(request):
         {
             "totals__universite": totals__universite,
             "totals__entreprise": totals__entreprise,
-            "entreprises": entreprises,
+            "facultes": Faculte.objects.all(),
         },
     )
+def create_faculte(request):
+    if request.method == 'POST':
+        # Traiter le formulaire ici
+        nom = request.POST.get('nom')
+        universite = request.user.universite
+        Faculte.objects.create(nom=nom, universite=universite)
+        # Faire quelque chose avec les données du formulaire
+        message = 'Faculte créé avec succès !'
+        return render(request, 'dashboard/dashboard.html',{'message': message,'facultes': Faculte.objects.filter(universite_id=request.user.universite.id)})
+    else:
+        return render(request, 'dashboard/dashboard.html')
+    
 
 def ajouter_entreprise (request):
     return render(request, "dashboard/ajouter_entreprise.html")
-
+def liste_entreprises (request):
+    entreprises = Entreprise.objects.all()
+    return render(
+        request,
+        "dashboard/list_entreprises.html",
+        {
+             "entreprises": entreprises,
+        },
+    )
 
 def ajouter_etudiant (request):
     entreprises = Entreprise.objects.all()
+    faculte = Faculte.objects.all()
+    return render(request, "dashboard/ajouter_etudiant.html", {"entreprises": entreprises, 'facultes':  faculte})
+def create_new_etudiant(request):
+    if request.method == 'POST':
+        matricule = request.POST['matricule']
+        nom = request.POST['nom']
+        prenom = request.POST['prenom']
+        promotion = request.POST['promotion']
+        filiere = request.POST['filiere']
+        faculte_id = request.POST['faculte']
+        faculte = Faculte.objects.get(id=faculte_id)
+        etudiant = Etudiant(matricule=matricule, nom=nom, prenom=prenom, promotion=promotion, faculte=faculte, filiere=filiere)
+        etudiant.save()
+        etudiants = Etudiant.objects.all()
+        message = 'Étudiant créé avec succès !'
+        return render(request, 'dashboard/ajouter_etudiant.html', {'message': message})
     universites = Universite.objects.all()
-    return render(request, "dashboard/ajouter_etudiant.html", {"entreprises": entreprises, "universites": universites})
+    return render(request, 'dashboard/liste_etudiant.html', {'facultes':  faculte,"etudiants":etudiants})
 
+def affecter_etudiant (request, etudiant_id):
+    entreprises = Entreprise.objects.all()
+    etudiant = Etudiant.objects.get(matricule=etudiant_id)
+    print(etudiant)
+    return render(request, "dashboard/affecter_etudiant.html", {"entreprises": entreprises, "etudiant": etudiant})
+
+def create_affectation_etudiant(request):
+    if request.method == 'POST':
+        etudiant_id = request.POST['matricule']
+        entreprise_id = request.POST['entreprise']
+        entreprise = Entreprise.objects.get(id=entreprise_id)
+        etudiant = Etudiant.objects.get(matricule=etudiant_id)
+        etudiant.entreprise = entreprise
+        etudiant.save()
+        message = 'Étudiant créé avec succès !'
+        return render(request, 'dashboard/affecter_etudiant.html', {'message': message})
+    faculte = Faculte.objects.all()
+    etudiants = Etudiant.objects.all()
+    return render(request, 'dashboard/liste_etudiant.html', {'facultes': faculte, 'etudiants': etudiants})
 
 def create_entreprise(request):
     if request.method == 'POST':
@@ -46,26 +101,7 @@ def create_entreprise(request):
     return render(request, 'dashboard/ajouter_entreprise.html')
 
 
-def create_etudiant(request):
-    if request.method == 'POST':
-        matricule = request.POST['matricule']
-        nom = request.POST['nom']
-        prenom = request.POST['prenom']
-        promotion = request.POST['promotion']
-        faculte_id = request.POST['faculte']
-        filiere = request.POST['filiere']
-        universite_id = request.POST['universite']
-        universite = Universite.objects.get(id=universite_id)
-        faculte = Faculte.objects.get(id=faculte_id)
-        entreprise_id = request.POST['entreprise']
-        entreprise = Entreprise.objects.get(id=entreprise_id)
-        etudiant = Etudiant(matricule=matricule, nom=nom, prenom=prenom, promotion=promotion, faculte=faculte, filiere=filiere, Universite=universite,entreprise=entreprise)
-        etudiant.save()
-        etudiants = Etudiant.objects.all()
-        message = 'Étudiant créé avec succès !'
-        return render(request, 'dashboard/ajouter_etudiant.html', {'message': message})
-    universites = Universite.objects.all()
-    return render(request, 'dashboard/ajouter_etudiant.html', {'universites': universites,"etudiants":etudiants})
+
 
 # views.py
 
@@ -85,9 +121,25 @@ def liste_stagaires(request):
     return render(request, 'dashboard/liste_stagaire.html', {"etudiants": etudiants})
 
 
+def liste_etudiants(request):
+    etudiants = Etudiant.objects.filter(faculte_id=request.user.faculte)
+    return render(request, 'dashboard/liste_etudiant.html', {"etudiants": etudiants})
+
+def list_etudiant_affecter(request):
+    etudiants = Etudiant.objects.filter(faculte_id=request.user.faculte)
+    return render(request, 'dashboard/list_etudiant_affecter.html', {"etudiants": etudiants})
+
+def list_evaluation(request):
+    etudiants = Etudiant.objects.filter(faculte_id=request.user.faculte)
+    for etudiant in etudiants:
+        cotations = Cotation.objects.filter(etudiant=etudiant)
+        total_cotation = sum([cotation.regularite + cotation.connaissance + cotation.competance + cotation.dicipline + cotation.rendement + cotation.sociabililte for cotation in cotations])
+        etudiant.total = format((total_cotation / 6), ".2f") # calculate percentage
+    return render(request, 'dashboard/list_evaluations.html', {"etudiants": etudiants})
+
 
 def stage(request):
-    stages = Stage.objects.all()
+    stages = Stage.objects.filter(isStage=True)
     entreprise_id = request.user.entreprise
     print(entreprise_id)
     etudiants = Etudiant.objects.filter(entreprise=entreprise_id)
@@ -96,7 +148,7 @@ def stage(request):
         "etudiants": etudiants
     })
 
-
+from datetime import date
 def commenece_stage(request, etudiant_id):
     etudiant = Etudiant.objects.get(matricule=etudiant_id)
     return render(request, 'dashboard/create_stage.html',{"etudiant": etudiant})
@@ -114,8 +166,8 @@ def create_stage(request, etudiant_id):
         annee = request.POST.get('annee')
         date_debut = request.POST.get('date_debut')
         etudiant = Etudiant.objects.get(matricule=etudiant_id)
-        universite_id = etudiant.Universite.id
-        universite = Universite.objects.get(id=universite_id)
+        faculte_id = etudiant.faculte.id
+        faculte = Faculte.objects.get(id=faculte_id)
         entreprise_id = request.user.entreprise.id
         entreprise = Entreprise.objects.get(id=entreprise_id)
         encadreur_id = request.user.id
@@ -126,11 +178,13 @@ def create_stage(request, etudiant_id):
             titre=titre,
             description=description,
             annee=annee,
+            date_inscription=date_debut,
             date_debut=date_debut,
             etudiant=etudiant,
-            universite=universite,
             entreprise=entreprise,
-            encadeur=encadreur
+            encadeur=encadreur,
+            faculte=faculte,
+            isStage = True
         )
         project.save()
         stages = Stage.objects.all()
@@ -161,6 +215,7 @@ def terminer_stage (request, etudiant_id):
 
         # Update the Stage model
         stage.date_fin = date_fin
+        stage.isStage = False
         stage.save()
 
         cotation = Cotation(
@@ -181,8 +236,6 @@ def terminer_stage (request, etudiant_id):
 def cotations(request):
     cotations = Cotation.objects.all()
     return render(request, 'dashboard/cotation.html', {"cotations": cotations})
-
-
 
 def export_cotations_to_csv(request):
     response = HttpResponse(content_type='text/csv')
@@ -270,3 +323,7 @@ def export_stages_to_csv(request):
         ])
 
     return response
+
+
+
+

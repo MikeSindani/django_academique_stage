@@ -64,7 +64,7 @@
                     <form class="form-horizontal form-material" action="/dashboard/create_stage/{{ etudiant.matricule }}/" method="POST">
                         {% csrf_token %}
                         <div class="form-group mb-4">
-                            <label class="col-md-12 p-0">Titre</label>
+                            <label class="col-md-12 p-0">Sujet</label>
                             <div class="col-md-12 border-bottom p-0">
                                 <input type="text" placeholder="Titre" class="form-control p-0 border-0" name="titre">
                             </div>
@@ -84,14 +84,14 @@
                         <div class="form-group mb-4">
                             <label class="col-md-12 p-0">Date de début</label>
                             <div class="col-md-12 border-bottom p-0">
-                                <input type="date" class="form-control p-0 border-0" name="date_debut">
+                                <input type="date" class="form-control p-0 border-0" name="date_debut" required>
                             </div>
                         </div>
-
+                        <hr>
                         <div class="form-group mb-4">
-                            <label class="col-md-12 p-0">Université</label>
+                            <label class="col-md-12 p-0">Faculte</label>
                             <div class="col-md-12 border-bottom p-0">
-                                <input  type="text" disabled value="{{ etudiant.universite.nom }}" placeholder="{{ etudiant.universite.nom }}" class="form-control p-0 border-0" name="universite">
+                                <input  name="fac"  type="text" disabled value="{{ etudiant.faculte.nom }}" placeholder="{{ etudiant.faculte.nom }}" class="form-control p-0 border-0" >
                             </div>
                         </div>
                         <div class="form-group mb-4">
@@ -108,7 +108,7 @@
                         </div>
                         <div class="form-group mb-4">
                             <div class="col-sm-12">
-                                <button class="btn btn-success">Save</button>
+                                <button class="btn btn-success">Enregistree</button>
                             </div>
                         </div>
                     </form>

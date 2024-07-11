@@ -22,6 +22,64 @@
     <link rel="stylesheet" href=" {% static 'plugins/bower_components/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.css' %}"  >
     <!-- Custom CSS -->
     <link href=" {% static 'css/style.min.css' %}" rel="stylesheet">
+    <style>
+        /* Style the submenu */
+.submenu {
+  display: none;
+  list-style: none;
+  color:#ccc;
+  background-color: #ccc;
+}
+
+.submenu-item {
+  padding: 10px;
+  margin-left: 25px;
+}
+
+.submenu-item:last-child {
+  border-bottom: none;
+}
+
+.submenu-link {
+  color: #333;
+  text-decoration: none;
+}
+
+.submenu-link:hover {
+  color: #337ab7;
+}
+
+/* Style the parent menu item */
+.sidebar-item > a {
+  position: relative;
+}
+
+.sidebar-item > a::after {
+  content: "\f0da";
+  font-family: FontAwesome;
+  font-size: 12px;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.sidebar-item.active > a::after {
+  content: "\f0d7";
+}
+
+/* Show the submenu on hover */
+.sidebar-item:hover > .submenu {
+  display: block;
+}
+.submenu {
+  display: none;
+}
+
+.submenu.show {
+  display: block;
+}
+    </style>
 
     {%block links %} {%endblock links %}
     <title>{%block titre%}{%endblock titre %} - Academy stage</title>
@@ -101,7 +159,7 @@
                         <li>
                             <a class="profile-pic" href="#">
                                 <img src="{% static "img/avatar.png" %}" alt="user-img" width="36"
-                                    class="img-circle"><span class="text-white font-medium">Welcome, {{ request.user.username }}</span></a>
+                                    class="img-circle"><span class="text-white font-medium">Welcome, {{ request.user.username }} {% if request.user.faculte.nom  %} ({{request.user.faculte}}) {% endif %} {% if request.user.entreprise.nom %} ({{request.user.entreprise.nom}}) {% endif %}</span></a>
                         </li>
                         <!-- ============================================================== -->
                         <!-- User profile and search -->
@@ -130,7 +188,7 @@
                                 <span class="hide-menu">Dashboard</span>
                             </a>
                         </li>
-                        {% if request.user.isUnversite %}
+                        {% if request.user.isFaculte %}
                         <li class="sidebar-item">
                             <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{% url 'ajouter_entreprise' %}"
                                 aria-expanded="false">
@@ -138,16 +196,50 @@
                                 <span class="hide-menu">Ajouter entreprise</span>
                             </a>
                         </li>
-                       
                         <li class="sidebar-item">
                             <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{% url 'ajouter_etudiant' %}"
                                 aria-expanded="false">
                                 <i class="fa fa-user" aria-hidden="true"></i>
-                                <span class="hide-menu">Affecter un etudiant</span>
+                                <span class="hide-menu">Ajouter un etudiant</span>
                             </a>
                         </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="#" aria-expanded="false">
+                              <i class="fa fa-table" aria-hidden="true"></i>
+                              <span class="hide-menu">Listes</span>
+                            </a>
+                            <ul class="submenu ml-8">
+                                <hr>
+                              <li class="submenu-item">
+                                <a class="submenu-link" href="{% url 'list_entreprises' %}">
+                                  <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                                  <span class="hide-menu">Listes entreprises</span>
+                                </a>
+                              </li>
+                              <li class="submenu-item">
+                                <a class="submenu-link" href="{% url 'liste_etudiants' %}">
+                                    <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                                  <span class="hide-menu">Listes etudiants enregistree</span>
+                                </a>
+                              </li>
+                              <li class="submenu-item">
+                                <a class="submenu-link" href="{% url 'list_etudiant_affecter' %}">
+                                    <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                                  <span class="hide-menu">Listes etudiants affectees</span>
+                                </a>
+                              </li>
+                              <li class="submenu-item">
+                                <a class="submenu-link" href="{% url 'list_evaluation' %}">
+                                    <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                                  <span class="hide-menu">Listes evaluations</span>
+                                </a>
+                              </li>
+                              <hr>
+                            </ul>
+                          </li>
                         {% endif %}
-                        {% if request.user.isEntreprise %}
+                       
+                        {% if request.user.isEntreprise  %}
                         <li class="sidebar-item">
                             <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{% url 'liste_stagaires' %}"
                                 aria-expanded="false">
@@ -155,7 +247,7 @@
                                 <span class="hide-menu">Listes de Stagaires</span>
                             </a>
                         </li>
-                        {% endif %}
+                        
                        
                         <li class="sidebar-item">
                             <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{% url 'stage' %}"
@@ -171,9 +263,10 @@
                                 <span class="hide-menu">Cotations</span>
                             </a>             
                         </li>
+                        {% endif %}
                         <li class="text-center p-20 upgrade-btn">
                             <a href="{% url  'logout'  %}"
-                                class="btn d-grid btn-danger text-white" target="_blank">
+                                class="btn d-grid btn-danger text-white">
                                 Se deconnecter</a>
                         </li>
 

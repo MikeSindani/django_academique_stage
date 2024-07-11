@@ -22,25 +22,42 @@
       </header>
 
       <div class="login__body">
-        <div class="d-md-flex justify-content-center row" style="display: flex; gap: 10px;margin: 10px;">
-          <input type="radio" name="isEntreprise" id="entreprise" value="entreprise">
-          <label for="entreprise">Is Entreprise</label><br>
+        <div style="display: flex;justify-content: center; gap: 10px">
+          <div class="d-md-flex justify-content-center row" style="display: flex; gap: 10px;margin: 10px;">
+            <input type="radio" name="isEntreprise" id="entreprise" value="entreprise">
+            <label for="entreprise">C'est Entreprise</label><br>
+          </div>
+          <div class="d-md-flex justify-content-center row" style="display: flex; gap: 10px;margin: 10px;">
+              <input type="radio" name="isUnversite" id="universite" value="universite">
+              <label for="universite">C'est Faculte</label>
+          </div>
         </div>
-      <div class="d-md-flex justify-content-center row" style="display: flex; gap: 10px;margin: 10px;">
-          <input type="radio" name="isUnversite" id="universite" value="universite">
-          <label for="universite">Is Université</label>
-      </div>
+      
+
         <div class="form__field" style="margin-bottom: 10px;">
           <input type="text" name="username" placeholder="Username" required>
         </div>
         <div class="form__field">
           <input type="email" name="email" placeholder="Email" required>
         </div>
-      
         <div class="form__field">
           <input type="password" name="password" placeholder="Password" required>
         </div>
-        <hr>
+        
+        <div id="universite-content" style="display: none;">
+          <hr>
+        <div class="form__field">
+          <select name="faculte" >
+            <option value="None">Selection une faculte</option>
+            {% for faculte in facultes %}
+                <option value="{{ faculte.id }}">{{ faculte.nom }}</option>
+            {% endfor %}
+        </select>
+        </div>
+        </div>
+       
+        <div id="entreprise-content" style="display: none;">
+          <hr>
         <div class="form__field">
           <select name="entreprise" >
             <option value="None">Selection entreprise</option>
@@ -49,13 +66,8 @@
             {% endfor %}
         </select>
         </div>
+      </div>
         <hr>
-        <div class="form__field">
-          <input type="text" name="universite" placeholder="Universite">
-        </div>
-        <hr>
-        
-      
       </div>
       <div>{{msg}}</div>
 
@@ -71,6 +83,23 @@
     </form>
 
   </div>
+  <script>
+    const radios = document.querySelectorAll('input[type="radio"]');
+    const entrepriseContent = document.getElementById('entreprise-content');
+    const universiteContent = document.getElementById('universite-content');
+
+    radios.forEach((radio) => {
+      radio.addEventListener('change', (e) => {
+        if (e.target.value === 'entreprise') {
+          entrepriseContent.style.display = 'block';
+          universiteContent.style.display = 'none';
+        } else if (e.target.value === 'universite') {
+          entrepriseContent.style.display = 'none';
+          universiteContent.style.display = 'block';
+        }
+      });
+    });
+  </script>
 
 </body>
 <!-- partial -->
