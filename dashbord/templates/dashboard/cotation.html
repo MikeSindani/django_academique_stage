@@ -46,8 +46,8 @@
                                     <<thead>
                                         <tr>
                                           <th><b>Étudiant</b></th>
-                                          <th>Universite</th>
                                           <th>Faculte</th>
+                                          <th>Filiere</th>
                                           <th>Promotion</th>
                                           <th>Regularité</th>
                                           <th>Connaissance</th>
@@ -63,13 +63,14 @@
                                           <td> <b>{{ cotation.etudiant.nom }} {{ cotation.etudiant.prenom }}</b></td>
                                           <td>{{ cotation.etudiant.universite.nom }}</td>
                                           <td>{{ cotation.etudiant.faculte.nom }}</td>
+                                          <td>{{ cotation.etudiant.filiere_relation.nom }}</td>
                                           <td>{{ cotation.etudiant.promotion }}</td>
                                           <td>{{ cotation.regularite }}</td>
                                           <td>{{ cotation.connaissance }}</td>
                                           <td>{{ cotation.competance }}</td>
-                                          <td>{{ cotation.discipline }}</td>
+                                          <td>{{ cotation.dicipline }}</td>
                                           <td>{{ cotation.rendement }}</td>
-                                          <td>{{ cotation.sociabilite }}</td>
+                                          <td>{{ cotation.sociabililte }}</td>
                                          
                                         </tr>
                                         {% empty %}

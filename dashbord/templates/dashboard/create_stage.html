@@ -63,14 +63,15 @@
                         
                     <form class="form-horizontal form-material" action="/dashboard/create_stage/{{ etudiant.matricule }}/" method="POST">
                         {% csrf_token %}
+                        <h5>Remplir le formulaire</h5>
                         <div class="form-group mb-4">
-                            <label class="col-md-12 p-0">Sujet</label>
+                            <label class="col-md-12 p-0">Raison</label>
                             <div class="col-md-12 border-bottom p-0">
                                 <input type="text" placeholder="Titre" class="form-control p-0 border-0" name="titre">
                             </div>
                         </div>
                         <div class="form-group mb-4">
-                            <label class="col-md-12 p-0">Description</label>
+                            <label class="col-md-12 p-0">Note</label>
                             <div class="col-md-12 border-bottom p-0">
                                 <textarea rows="5" class="form-control p-0 border-0" name="description"></textarea>
                             </div>
@@ -88,22 +89,23 @@
                             </div>
                         </div>
                         <hr>
+                        <h5>Donnee deja la base de donnée.</h5>
                         <div class="form-group mb-4">
                             <label class="col-md-12 p-0">Faculte</label>
                             <div class="col-md-12 border-bottom p-0">
-                                <input  name="fac"  type="text" disabled value="{{ etudiant.faculte.nom }}" placeholder="{{ etudiant.faculte.nom }}" class="form-control p-0 border-0" >
+                                <input  name="fac"  type="text" disabled value="{{ etudiant.faculte.nom }}" placeholder="{{ etudiant.faculte.nom }}" class="form-control p-0 border-0" style="background-color: aliceblue;">
                             </div>
                         </div>
                         <div class="form-group mb-4">
                             <label class="col-md-12 p-0">Entreprise</label>
                             <div class="col-md-12 border-bottom p-0">
-                                <input  type="text" disabled value="{{ request.user.entreprise.nom }}" placeholder="{{ request.user.username }}" class="form-control p-0 border-0" name="entreprise">
+                                <input  type="text" disabled value="{{ request.user.entreprise.nom }}" placeholder="{{ request.user.username }}" class="form-control p-0 border-0" name="entreprise" style="background-color: aliceblue;" >
                             </div>
                         </div>
                         <div class="form-group mb-4">
                             <label class="col-md-12 p-0">Encadreur</label>
                             <div class="col-md-12 border-bottom p-0">
-                               <input  type="text" disabled value="{{ request.user.username }}" placeholder="{{ request.user.username }}" class="form-control p-0 border-0" name="encadreur">
+                               <input  type="text" disabled value="{{ request.user.username }}" placeholder="{{ request.user.username }}" class="form-control p-0 border-0" name="encadreur" style="background-color: aliceblue;">
                             </div>
                         </div>
                         <div class="form-group mb-4">

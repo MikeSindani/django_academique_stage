@@ -45,7 +45,6 @@
                                 <table class="table text-nowrap">
                                     <thead>
                                         <tr>
-                                            <th>Action</th>
                                           <th>Matricule</th>
                                           <th>Nom</th>
                                           <th>Postnom</th>
@@ -57,11 +56,10 @@
                                       <tbody>
                                         {% for etudiant in etudiants %}
                                         <tr>
-                                          <td><a class="btn btn-primary" href="/dashboard/affecter_etudiant/{{ etudiant.matricule }}/">Affecter etudiant</a></td>
                                           <td>{{ etudiant.matricule }}</td>
                                           <td><b>{{ etudiant.nom }}</b></td>
                                           <td><b>{{ etudiant.prenom }}</b></td>
-                                          <td>{{ etudiant.filiere }}</td>
+                                          <td>{{ etudiant.filiere_relation.nom }}</td>
                                           <td>{{ etudiant.faculte.nom }}</td>
                                           <td style="background-color: rgb(225, 225, 225);">{{ etudiant.total}}</td>
                                         </tr>
@@ -93,9 +91,7 @@
             <!-- ============================================================== -->
             <!-- footer -->
             <!-- ============================================================== -->
-            <footer class="footer text-center"> 2021 © Ample Admin brought to you by <a
-                    href="https://www.wrappixel.com/">wrappixel.com</a>
-            </footer>
+           
             <!-- ============================================================== -->
             <!-- End footer -->
             <!-- ============================================================== -->

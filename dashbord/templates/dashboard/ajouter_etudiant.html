@@ -91,12 +91,12 @@
                                         </div>
                                     </div>
                                     <div class="form-group mb-4">
-                                        <label class="col-md-12 p-0">Faculte</label>
+                                        <label class="col-md-12 p-0">Filiere</label>
                                         <div class="col-md-12 border-bottom p-0">
-                                            <select class="form-control p-0 border-0" name="faculte"  id="id-du-select_universite">
+                                            <select class="form-control p-0 border-0" name="filiere"  id="id-du-select_universite">
                                                 <option value="0">-------</option>
-                                                {% for faculte in facultes %}
-                                                    <option value="{{ faculte.id }}">{{ faculte.nom }}</option>
+                                                {% for filiere in filieres %}
+                                                    <option value="{{ filiere.id }}">{{ filiere.nom }}</option>
                                                 {% endfor %}
                                             </select>
                                         </div>
@@ -108,11 +108,12 @@
                                                 class="form-control p-0 border-0" name="promotion">
                                         </div>
                                     </div>
+                                    <hr>
                                     <div class="form-group mb-4">
-                                        <label class="col-md-12 p-0">Filière</label>
+                                        <label class="col-md-12 p-0">Faculte</label>
                                         <div class="col-md-12 border-bottom p-0">
-                                            <input type="text"  placeholder="Filière de l'étudiant"
-                                        class="form-control p-0 border-0" name="filiere">
+                                            <input type="text" value="{{ request.user.faculte }}"  placeholder="Faculte de l'étudiant" disabled
+                                        class="form-control p-0 border-0" name="faculte" style="background-color: rgb(235, 235, 235);"> 
                                         </div>
                                     </div>
                                     
@@ -151,9 +152,7 @@
             <!-- ============================================================== -->
             <!-- footer -->
             <!-- ============================================================== -->
-            <footer class="footer text-center"> 2021 © Ample Admin brought to you by <a
-                    href="https://www.wrappixel.com/">wrappixel.com</a>
-            </footer>
+          
             <!-- ============================================================== -->
             <!-- End footer -->
             <!-- ============================================================== -->

@@ -47,33 +47,33 @@ def create_account(request):
         username = request.POST["username"]
         email = request.POST["email"]
         password = request.POST["password"]
-        entreprise_req = request.POST["entreprise"]
-        faculte_req = request.POST["faculte"]
+        status = request.POST["status"]
         isEntreprise_req = request.POST.get("isEntreprise", False)
+        entreprise_id = request.POST.get("entreprise")
         isUnversite_req = request.POST.get("isUnversite", False)
         isEntreprise = False
         isUniversite = False
         if isEntreprise_req == "entreprise":
             isEntreprise = True
             isFaculte = False
+            entreprise = Entreprise.objects.get(id=entreprise_id)
         elif isUnversite_req == "universite":
             isEntreprise = False
             isFaculte = True
+            faculte = Faculte(nom=username,email=email)
+            faculte.save()
         else:
             isEntreprise = False
             isFaculte = False
-
-        entreprise = None
-        if entreprise_req != "None":
-            entreprise = Entreprise.objects.get(id=entreprise_req)
-        universite, created = Faculte.objects.get_or_create(
-            nom=faculte_req, email=email
-        )
+        
 
         user = User(username=username, email=email)
         user.set_password(password)
-        user.entreprise = entreprise
-        user.faculte = universite
+        if isEntreprise_req == "entreprise":
+            user.entreprise = entreprise
+        else : 
+           faculte = Faculte.objects.get(nom=username)
+           user.faculte = faculte
         user.isEntreprise = isEntreprise
         user.isFaculte = isFaculte
         try:

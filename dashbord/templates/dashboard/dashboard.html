@@ -115,7 +115,7 @@
                         <div class="white-box">
                             
                             <div class="d-md-flex mb-3"  >
-                                <h3 class="box-title mb-0">Listes facultes</h3>
+                                <h3 class="box-title mb-0">Ajouter une filiere</h3>
                                 <div class="col-md-3 col-sm-4 col-xs-6 ms-auto" style="display:none;">
                                     <select class="form-select shadow-none row border-top">
                                         <option>March 2021</option>
@@ -126,8 +126,8 @@
                                     </select>
                                 </div> 
                             </div>
-                            {% comment %}
-                            <form action="{% url 'create_faculte' %}" method="POST" class="form-horizontal">
+                          
+                            <form action="{% url 'create_filiere' %}" method="POST" class="form-horizontal">
                                 {% csrf_token %}
                                 <div class="form-group">
                                     <label for="nom" class="col-sm-2 control-label">Nom:</label>
@@ -135,13 +135,12 @@
                                         <input type="text" id="nom" name="nom" class="form-control">
                                     </div>
                                 </div>
-                            
                                 <div class="form-group">
-                                    <label for="universite" class="col-sm-2 control-label">Université:</label>
+                                    <label for="email" class="col-sm-2 control-label">Email:</label>
                                     <div class="col-sm-10">
-                                        <input type="text" id="universite" name="universite" value="{{ request.user.universite.nom }}" class="form-control">
+                                        <input type="email" id="email" name="email" class="form-control">
                                     </div>
-                                </div>                
+                                </div>              
                                 <div class="form-group">
                                     <div class="col-sm-offset-2 col-sm-10">
                                         <button type="submit" class="btn btn-primary">Ajouter</button>
@@ -151,9 +150,20 @@
                                 <div class="alert alert-success" role="alert">
                                     {{ message }}
                                 </div>
-                                
+                                {% endif %}
                             </form>
-                            {% endcomment %}
+                            <div class="d-md-flex mb-3"  >
+                                <h3 class="box-title mb-0">Listes des filieres</h3>
+                                <div class="col-md-3 col-sm-4 col-xs-6 ms-auto" style="display:none;">
+                                    <select class="form-select shadow-none row border-top">
+                                        <option>March 2021</option>
+                                        <option>April 2021</option>
+                                        <option>May 2021</option>
+                                        <option>June 2021</option>
+                                        <option>July 2021</option>
+                                    </select>
+                                </div> 
+                            </div>
                             <div class="table-responsive">
                                 <table class="table no-wrap">
                                     <thead>

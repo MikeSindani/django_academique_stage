@@ -22,29 +22,29 @@
       </header>
 
       <div class="login__body">
-        <div style="display: flex;justify-content: center; gap: 10px">
-          <div class="d-md-flex justify-content-center row" style="display: flex; gap: 10px;margin: 10px;">
-            <input type="radio" name="isEntreprise" id="entreprise" value="entreprise">
-            <label for="entreprise">C'est Entreprise</label><br>
-          </div>
-          <div class="d-md-flex justify-content-center row" style="display: flex; gap: 10px;margin: 10px;">
-              <input type="radio" name="isUnversite" id="universite" value="universite">
-              <label for="universite">C'est Faculte</label>
-          </div>
+        <div style="display: flex;justify-content: center; align-items: center; gap: 20px">
+            <input type="radio" name="isEntreprise" id="entreprise" value="entreprise" >
+            <label for="entreprise">
+              C'est Entreprise
+            </label><br> <br>
+            <input type="radio" name="isUnversite" id="universite" value="universite">
+            <label for="universite">
+              C'est Faculte
+            </label>
         </div>
       
 
         <div class="form__field" style="margin-bottom: 10px;">
-          <input type="text" name="username" placeholder="Username" required>
+          <input type="text" name="username" placeholder="Nom entreprise ou faculte" required>
         </div>
         <div class="form__field">
-          <input type="email" name="email" placeholder="Email" required>
+          <input type="email" name="email" placeholder="Email entreprise ou faculte" required>
         </div>
         <div class="form__field">
           <input type="password" name="password" placeholder="Password" required>
         </div>
         
-        <div id="universite-content" style="display: none;">
+        <div id="universite-content1" style="display: none;">
           <hr>
         <div class="form__field">
           <select name="faculte" >
@@ -65,6 +65,9 @@
                 <option value="{{ entreprise.id }}">{{ entreprise.nom }} - {{ entreprise.status }}</option>
             {% endfor %}
         </select>
+        </div>
+        <div class="form__field">
+          <input type="text" name="status" placeholder="Status">
         </div>
       </div>
         <hr>

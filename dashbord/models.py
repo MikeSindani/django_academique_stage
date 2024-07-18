@@ -5,19 +5,25 @@ from django.contrib.auth.models import AbstractUser
 class Universite(models.Model):
     nom = models.CharField(max_length=200)
     email = models.EmailField()
-    
+
+
 class Faculte (models.Model):
     nom = models.CharField(max_length=200,unique=True)
     email = models.EmailField(default="exemple@gmail.com")
     def __str__(self, *args, **kwds) :
         return "{}".format(self.nom)
+    
+class Filiere(models.Model):
+    nom = models.CharField(max_length=200)
+    email = models.EmailField() 
+    faculte = models.ForeignKey("Faculte", on_delete=models.SET_NULL, null=True, blank=True)
 
 class Entreprise (models.Model):
     nom = models.CharField(max_length=200,unique=True)
     status = models.CharField(max_length=200)
     email = models.EmailField()
     adresse = models.CharField(max_length=200)
-
+ 
 class User(AbstractUser): # encadeur univeersiteur et entreprise utilisateur du systeme 
   # Pas besoin de définir le champ username
   username = models.CharField(max_length=200, unique=True)
@@ -41,7 +47,8 @@ class Etudiant(models.Model):
      prenom = models.CharField(max_length=200)  
      promotion = models.CharField(max_length=200)
      faculte =  models.ForeignKey("Faculte", on_delete=models.SET_NULL,null=True)
-     filiere = models.CharField(max_length=200)
+     filiere = models.CharField(max_length=200,null=True, blank=True)
+     filiere_relation = models.ForeignKey("Filiere", on_delete=models.SET_NULL, null=True, blank=True)
      entreprise = models.ForeignKey("Entreprise", on_delete=models.SET_NULL,null=True)
      faculte = models.ForeignKey("Faculte", on_delete=models.SET_NULL, null=True, blank=True)
      email = models.EmailField(null=True, blank=True)
@@ -71,4 +78,6 @@ class Cotation  (models.Model):
     dicipline = models.IntegerField()
     rendement = models.IntegerField()
     sociabililte = models.IntegerField()
+    isCotation = models.BooleanField(default=False)
+    entreprise = models.ForeignKey("Entreprise", on_delete=models.SET_NULL,null=True)
     etudiant = models.ForeignKey("Etudiant",on_delete=models.SET_NULL,null=True) 

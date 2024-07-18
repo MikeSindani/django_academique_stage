@@ -159,7 +159,7 @@
                         <li>
                             <a class="profile-pic" href="#">
                                 <img src="{% static "img/avatar.png" %}" alt="user-img" width="36"
-                                    class="img-circle"><span class="text-white font-medium">Welcome, {{ request.user.username }} {% if request.user.faculte.nom  %} ({{request.user.faculte}}) {% endif %} {% if request.user.entreprise.nom %} ({{request.user.entreprise.nom}}) {% endif %}</span></a>
+                                    class="img-circle"><span class="text-white font-medium">Welcome, {{ request.user.username }} {% if request.user.isFaculte   %} ({{request.user.faculte}}) {% endif %} {% if request.user.isEntreprise %} ({{request.user.entreprise.nom}}) {% endif %}</span></a>
                         </li>
                         <!-- ============================================================== -->
                         <!-- User profile and search -->
@@ -189,6 +189,13 @@
                             </a>
                         </li>
                         {% if request.user.isFaculte %}
+                        <li class="sidebar-item">
+                          <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{% url 'dashbord' %}"
+                              aria-expanded="false">
+                              <i class="fa fa-user" aria-hidden="true"></i>
+                              <span class="hide-menu">Ajouter filiere</span>
+                          </a>
+                      </li>
                         <li class="sidebar-item">
                             <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{% url 'ajouter_entreprise' %}"
                                 aria-expanded="false">
@@ -286,8 +293,7 @@
  <!-- ============================================================== -->
             <!-- footer -->
             <!-- ============================================================== -->
-        <footer class="footer text-center"> 2021 © Ample Admin brought to you by <a
-                href="https://www.wrappixel.com/">wrappixel.com</a>
+        <footer class="footer text-center"> 2021 © ACADEMIA STAGE 
         </footer>
         <!-- ============================================================== -->
         <!-- End footer -->

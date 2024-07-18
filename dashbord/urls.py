@@ -19,7 +19,7 @@ urlpatterns = [
     
     #path("ajouter_faculte", ajouter_faculte, name="ajouter_faculte"),
     #path('list_facultes/', list_facultes, name='list_facultes'),
-    path('create_faculte/', create_faculte, name='create_faculte'),
+    path('create_filiere/', create_filiere, name='create_filiere'),
     #path('delete_faculte/<int:pk>/', delete_faculty, name='delete_faculty'),
     
     path('api/faculties/', api_faculties, name='api_faculties'),
