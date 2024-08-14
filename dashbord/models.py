@@ -15,7 +15,6 @@ class Faculte (models.Model):
     
 class Filiere(models.Model):
     nom = models.CharField(max_length=200)
-    email = models.EmailField() 
     faculte = models.ForeignKey("Faculte", on_delete=models.SET_NULL, null=True, blank=True)
 
 class Entreprise (models.Model):

@@ -26,9 +26,8 @@ def create_filiere(request):
     if request.method == 'POST':
         # Traiter le formulaire ici
         nom = request.POST.get('nom')
-        email = request.POST.get('email')
         faculte = request.user.faculte
-        Filiere.objects.create(nom=nom, email=email, faculte=faculte)
+        Filiere.objects.create(nom=nom, faculte=faculte)
         # Faire quelque chose avec les données du formulaire
         message = 'Faculte créé avec succès !'
         return render(request, 'dashboard/dashboard.html',{'message': message,'facultes': Filiere.objects.filter(faculte=request.user.faculte)})
